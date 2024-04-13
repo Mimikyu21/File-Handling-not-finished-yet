@@ -1,0 +1,56 @@
+import os
+import shutil
+
+#user choice to make a file or no
+user_1 = input('you want to make a file ?(yes/no) ')
+
+#this null for moved section
+move = None
+
+
+#except try condition
+try:
+    #make a file
+    if user_1 == "yes":
+
+        # user input name file and the content
+        file_name = input("name the file(txt only): ")
+        file_content = input("write a text: ")
+
+        #write program
+        with open(file_name,"w") as file:
+            print(file.write(file_content))
+
+        #file close explicit
+        file.close()
+
+        #user choose to move the file or no
+        move = input("do you want to move the file ?(y/n): ")
+
+    #condition for user move the file
+    elif move == 'y':
+        okay = input('type confirm to move: ')
+        if okay == 'confirm':
+            #destination
+            destination = f'HERE\\{file_name}'
+            #condition if user want to move file
+            if os.path.exists(destination):#check if same file already exist
+                print("Same File Detected!")
+            else:
+                os.replace(file_name,destination)#check if not exist then do this
+                print(file_name+'Has Moved!')
+
+    else:
+        player = input("Do You want to copy this file or delete it ?(delete/copy):").lower()
+        if player == 'copy':
+            # to copy a file
+            shutil.copyfile(file_name, 'copy_here')
+        else:
+            # to delete a file
+            os.remove(file_name)  # delete a file
+
+except FileExistsError: #Error customization for this
+    print('Use other name file')
+
+except FileNotFoundError:#Error customization for this
+    print("File Not Detected")
